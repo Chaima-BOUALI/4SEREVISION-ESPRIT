@@ -1,0 +1,46 @@
+<table border="1">
+    {% set nbMax =0 %}
+    {% for form in formations %}
+        {% set nbMax = max(form.Nombre_Participants,nbMax) %}
+    {% endfor %}
+    <tr>
+        <th> Référence</th>
+        <th> Titre </th>
+        <th> Description </th>
+        <th> Date début</th>
+        <th> Date Fin</th>
+        <th> Nombre de Participants</th>
+    </tr>
+
+
+        {% for f in formations %}
+            <tr>
+             {#{% if 'Formation Théorique' in f.Description %} #}
+                 {#{% if f.Nombre_Participants == nbMax %}  #}
+                <td> {{ f.ref }}</td>
+                <td> {{ f.Titre|upper }}</td>
+                <td> {{ f.Description }}</td>
+                <td> {{ f.Date_Debut }}</td>
+                <td> {{ f.Date_fin }}</td>
+                <td> {{ f.Nombre_Participants }}</td>
+
+{# {% else %}
+      <strong> TABLEAU VIDE </strong> #}
+
+      <td>
+      {% if f.Nombre_Participants == 0  %}
+          <form action="{{path ('detail', {'id': f.ref}) }}"  >
+          <button> PARTICIPER MAINTENANT </button>
+          </form>
+          {% endif %}
+      </td>
+            </tr>
+        {% endfor %}
+    <h1> Le nombre des formations est : {{ formations |length }}</h1>
+
+</table>
+{% set Total  = 0 %}
+    {% for f in formations %}
+        {% set Total = Total + f.Nombre_Participants %}
+{% endfor %}
+<h1> Le nombre Total des participants est : {{ Total }}</h1>
